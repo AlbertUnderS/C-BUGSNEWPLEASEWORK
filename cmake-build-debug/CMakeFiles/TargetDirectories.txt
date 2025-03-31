@@ -1,0 +1,3 @@
+C:/Users/arago/CLionProjects/CA3-CPP-A.A/cmake-build-debug/CMakeFiles/CA3_CPP_A_A_.dir
+C:/Users/arago/CLionProjects/CA3-CPP-A.A/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/arago/CLionProjects/CA3-CPP-A.A/cmake-build-debug/CMakeFiles/rebuild_cache.dir

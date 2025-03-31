@@ -28,8 +28,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f26d060e-1093-45e7-954e-1019ecadc2d6" name="Changes" comment="initial commit">
-      <change beforePath="$PROJECT_DIR$/../CA3-CPP-A.A/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CA3-CPP-A.A/.idea/editor.xml" afterDir="false" />
+    <list default="true" id="f26d060e-1093-45e7-954e-1019ecadc2d6" name="Changes" comment="Craler bugs text file">
+      <change afterPath="$PROJECT_DIR$/../CA3-CPP-A.A/Crawler.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CA3-CPP-A.A/Crawler.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CA3-CPP-A.A/board.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CA3-CPP-A.A/board.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../CA3-CPP-A.A/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CA3-CPP-A.A/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../CA3-CPP-A.A/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/../CA3-CPP-A.A/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
     </list>
@@ -45,18 +48,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../CA3-CPP-A.A" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "AlbertUnderS"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AlbertUnderS&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/AlbertUnderS/CA3_CPP_A_A_.git",
-    "accountId": "ba050f85-c166-43a7-abfb-9770ff2819bd"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AlbertUnderS/CA3_CPP_A_A_.git&quot;,
+    &quot;accountId&quot;: &quot;ba050f85-c166-43a7-abfb-9770ff2819bd&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
     <option name="majorVersion" value="2024" />
@@ -72,27 +75,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.RadMigrateCodeStyle": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "RunOnceActivity.west.config.association.type.startup.service": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/arago/CLionProjects/CA3-CPP-A.A",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/arago/CLionProjects/CA3-CPP-A.A/main.cpp",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.west.config.association.type.startup.service&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/arago/CLionProjects/CA3-CPP-A.A&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/arago/CLionProjects/CA3-CPP-A.A/main.cpp&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="CA3_CPP_A_A_" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CA3_CPP_A_A_" TARGET_NAME="CA3_CPP_A_A_" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="CA3_CPP_A_A_" RUN_TARGET_NAME="CA3_CPP_A_A_">
       <method v="2">
@@ -110,7 +113,8 @@
       <updated>1743409424468</updated>
       <workItem from="1743409425883" duration="139000" />
       <workItem from="1743409580838" duration="10000" />
-      <workItem from="1743409606114" duration="698000" />
+      <workItem from="1743409606114" duration="2002000" />
+      <workItem from="1743428268756" duration="788000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -120,7 +124,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743409511176</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Craler bugs text file">
+      <option name="closed" value="true" />
+      <created>1743412364516</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1743412364516</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,7 +140,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="initial commit" />
+    <MESSAGE value="Craler bugs text file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Craler bugs text file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

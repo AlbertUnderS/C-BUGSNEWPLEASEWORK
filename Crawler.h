@@ -6,37 +6,43 @@
 
 #include <iostream>
 #include <list>
-#include <vector>
-#include "Position.h"  // ✅ Make sure this is included!
 
-enum class Direction { North = 1, East, South, West };
+// Define Direction enum class for better readability
+enum class Direction {
+    North = 1,
+    East,
+    South,
+    West
+};
+
+// Position structure for easier coordinate management
+struct Position {
+    int x, y;
+};
 
 class Crawler {
 private:
     int id;
-    Position position;  // ✅ Now Position is recognized!
+    Position position;
     Direction direction;
     int size;
     bool alive;
-    std::list<Position> path;
+    std::list<Position> path;  // List to store the path of the crawler
 
 public:
-    // Constructor
     Crawler(int id, int x, int y, Direction dir, int size);
 
-    // Movement logic
-    void move();
-
-    // Check if movement is blocked
-    bool isWayBlocked() const;
-
-    // Display bug details
-    void display() const;
-
-    // Getters
     int getId() const { return id; }
     Position getPosition() const { return position; }
+    Direction getDirection() const { return direction; }
+    int getSize() const { return size; }
     bool isAlive() const { return alive; }
+
+    // Method to display the crawler's status
+    void display() const;
+
+    // Method to update movement and other behavior
+    void move();
 };
 
-#endif // CRAWLER_H
+#endif

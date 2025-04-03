@@ -7,29 +7,18 @@
 
 #include <vector>
 #include <string>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include "Crawler.h"  // To use the Crawler class
+#include "Crawler.h"
 
 class Board {
 private:
-    std::vector<Crawler*> crawlers;  // Store the bugs
-
+    std::vector<Crawler*> crawlers;  // List of Crawler objects on the board
 public:
-    // Constructor
-    Board();
-
-    // Destructor to clean up dynamic memory
-    ~Board();
-
-    // Initialize bugs from the file
+    // Method to initialize the board from the file
     void initializeFromFile(const std::string& filename);
 
-    // Display all the bugs
+    // Method to display all bugs on the board
     void displayAllBugs() const;
-
-    // Additional functions can be added later (e.g., move bugs, fight bugs, etc.)
 };
 
-#endif // BOARD_H
+#endif
+

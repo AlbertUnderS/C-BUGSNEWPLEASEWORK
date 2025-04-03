@@ -1,25 +1,37 @@
 #include <iostream>
+#include <vector>
+#include <cstdlib>  // For random numbers
+#include <ctime>
+#include "Crawler.h"
 
-// TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 int main() {
-    // TIP Press <shortcut actionId="RenameElement"/> when your caret is at the
-    // <b>lang</b> variable name to see how CLion can help you rename it.
-    auto lang = "C++";
-    std::cout << "Hello and welcome to " << lang << "!\n";
+    // Seed random number generator
+    std::srand(std::time(nullptr));
 
-    for (int i = 1; i <= 5; i++) {
-        // TIP Press <shortcut actionId="Debug"/> to start debugging your code.
-        // We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/>
-        // breakpoint for you, but you can always add more by pressing
-        // <shortcut actionId="ToggleLineBreakpoint"/>.
-        std::cout << "i = " << i << std::endl;
+    // Create a few test Crawler objects
+    std::vector<Crawler*> bugs;
+    bugs.push_back(new Crawler(101, 0, 0, Direction::East, 5));
+    bugs.push_back(new Crawler(102, 9, 0, Direction::South, 3));
+    bugs.push_back(new Crawler(103, 9, 9, Direction::West, 2));
+
+    // Display initial state of bugs
+    std::cout << "Initial Bug States:\n";
+    for (const auto& bug : bugs) {
+        bug->display();
     }
+
+    // Simulate a few movements
+    std::cout << "\nAfter Moving:\n";
+    for (auto& bug : bugs) {
+        bug->move();
+        bug->display();
+    }
+
+    // Clean up dynamically allocated memory
+    for (auto& bug : bugs) {
+        delete bug;
+    }
+    bugs.clear();
 
     return 0;
 }
-
-// TIP See CLion help at <a
-// href="https://www.jetbrains.com/help/clion/">jetbrains.com/help/clion/</a>.
-//  Also, you can try interactive lessons for CLion by selecting
-//  'Help | Learn IDE Features' from the main menu.

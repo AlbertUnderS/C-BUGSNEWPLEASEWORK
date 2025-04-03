@@ -5,19 +5,13 @@
 #define CRAWLER_H
 
 #include <iostream>
-#include <list>
+#include <list>  // For tracking the path history
 
-// Define Direction enum class for better readability
-enum class Direction {
-    North = 1,
-    East,
-    South,
-    West
-};
+enum class Direction { North = 1, East, South, West };
 
-// Position structure for easier coordinate management
 struct Position {
-    int x, y;
+    int x;
+    int y;
 };
 
 class Crawler {
@@ -27,22 +21,18 @@ private:
     Direction direction;
     int size;
     bool alive;
-    std::list<Position> path;  // List to store the path of the crawler
+    std::list<Position> path;
 
 public:
-    Crawler(int id, int x, int y, Direction dir, int size);
-
-    int getId() const { return id; }
-    Position getPosition() const { return position; }
-    Direction getDirection() const { return direction; }
-    int getSize() const { return size; }
-    bool isAlive() const { return alive; }
-
-    // Method to display the crawler's status
-    void display() const;
-
-    // Method to update movement and other behavior
-    void move();
+    Crawler(int id, int x, int y, Direction direction, int size);
+    void move();  // Move the bug
+    bool isWayBlocked();  // Check if movement is blocked
+    void display() const;  // Display the bug details
+    bool isAlive() const { return alive; }  // Check if the bug is alive
+    int getId() const { return id; }  // Get the bug ID
+    void setDirection(Direction newDirection);  // Set a new direction
+    Position getPosition() const { return position; }  // Get the bug position
+    void addPath(Position newPos) { path.push_back(newPos); }  // Add to movement history
 };
 
 #endif

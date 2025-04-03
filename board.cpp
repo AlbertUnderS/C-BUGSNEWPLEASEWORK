@@ -1,45 +1,32 @@
 //
 // Created by arago on 31/03/2025.
 //
-
 #include "Board.h"
 #include <iostream>
 #include <fstream>
-#include <sstream>
-#include <cstdlib>  // For random numbers
+
+Board::Board() {}
+
+Board::~Board() {
+    for (auto crawler : crawlers) {
+        delete crawler;  // Clean up dynamically allocated crawlers
+    }
+}
 
 void Board::initializeFromFile(const std::string& filename) {
     std::ifstream file(filename);
-
-    if (!file.is_open()) {
-        std::cout << "Error: Unable to open the file!" << std::endl;
+    if (!file) {
+        std::cerr << "Error: Unable to open the file!" << std::endl;
         return;
     }
 
-    std::string line;
-    while (std::getline(file, line)) {
-        std::stringstream ss(line);
-        char type;
-        int id, x, y, dir, size;
-
-        ss >> type;  // 'C' for crawler
-        ss.ignore();  // Skip the comma
-        ss >> id;
-        ss.ignore();
-        ss >> x;
-        ss.ignore();
-        ss >> y;
-        ss.ignore();
-        ss >> dir;
-        ss.ignore();
-        ss >> size;
-
-        Direction direction = static_cast<Direction>(dir);  // Convert integer to Direction enum
-
-        // Dynamically allocate Crawler and add to the vector
-        Crawler* newCrawler = new Crawler(id, x, y, direction, size);
-        crawlers.push_back(newCrawler);
+    int id, x, y, size, dir;
+    while (file >> id >> x >> y >> size >> dir) {
+        Direction direction = static_cast<Direction>(dir);
+        Crawler* crawler = new Crawler(id, x, y, direction, size);
+        crawlers.push_back(crawler);
     }
+
     file.close();
 }
 
@@ -51,21 +38,30 @@ void Board::displayAllBugs() const {
 
     for (const auto& crawler : crawlers) {
         if (crawler->isAlive()) {
-            std::cout << crawler->getId() << " Crawler ("
-                      << crawler->getPosition().x << ","
-                      << crawler->getPosition().y << ") "
-                      << crawler->getSize() << " ";
-
-            // Convert direction to readable string
-            switch (crawler->getDirection()) {
-                case Direction::North: std::cout << "North "; break;
-                case Direction::East: std::cout << "East "; break;
-                case Direction::South: std::cout << "South "; break;
-                case Direction::West: std::cout << "West "; break;
-                default: std::cout << "Unknown "; break;
-            }
-
-            std::cout << (crawler->isAlive() ? "Alive" : "Dead") << std::endl;
+            crawler->display();
         }
     }
+}
+
+void Board::findBugById(int id) const {
+    for (const auto& crawler : crawlers) {
+        if (crawler->getId() == id) {
+            crawler->display();
+            return;
+        }
+    }
+    std::cout << "Bug " << id << " not found." << std::endl;
+}
+
+void Board::tapBoard() {
+    std::cout << "Tapping the board...\n";
+
+    for (auto& crawler : crawlers) {
+        if (crawler->isAlive()) {
+            crawler->move();
+        }
+    }
+
+    std::cout << "New positions after tap:\n";
+    displayAllBugs();
 }

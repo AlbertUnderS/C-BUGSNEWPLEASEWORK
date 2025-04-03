@@ -67,6 +67,12 @@ build CMakeFiles/CA3_CPP_A_A_.dir/Position.cpp.obj: CXX_COMPILER__CA3_CPP_A_A__u
   OBJECT_DIR = CMakeFiles\CA3_CPP_A_A_.dir
   OBJECT_FILE_DIR = CMakeFiles\CA3_CPP_A_A_.dir
 
+build CMakeFiles/CA3_CPP_A_A_.dir/board.cpp.obj: CXX_COMPILER__CA3_CPP_A_A__unscanned_Debug C$:/Users/arago/CLionProjects/CA3-CPP-A.A/board.cpp || cmake_object_order_depends_target_CA3_CPP_A_A_
+  DEP_FILE = CMakeFiles\CA3_CPP_A_A_.dir\board.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\CA3_CPP_A_A_.dir
+  OBJECT_FILE_DIR = CMakeFiles\CA3_CPP_A_A_.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target CA3_CPP_A_A_
@@ -75,7 +81,7 @@ build CMakeFiles/CA3_CPP_A_A_.dir/Position.cpp.obj: CXX_COMPILER__CA3_CPP_A_A__u
 #############################################
 # Link the executable CA3_CPP_A_A_.exe
 
-build CA3_CPP_A_A_.exe: CXX_EXECUTABLE_LINKER__CA3_CPP_A_A__Debug CMakeFiles/CA3_CPP_A_A_.dir/main.cpp.obj CMakeFiles/CA3_CPP_A_A_.dir/Crawler.cpp.obj CMakeFiles/CA3_CPP_A_A_.dir/Position.cpp.obj
+build CA3_CPP_A_A_.exe: CXX_EXECUTABLE_LINKER__CA3_CPP_A_A__Debug CMakeFiles/CA3_CPP_A_A_.dir/main.cpp.obj CMakeFiles/CA3_CPP_A_A_.dir/Crawler.cpp.obj CMakeFiles/CA3_CPP_A_A_.dir/Position.cpp.obj CMakeFiles/CA3_CPP_A_A_.dir/board.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\CA3_CPP_A_A_.dir

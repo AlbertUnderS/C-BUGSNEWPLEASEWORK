@@ -12,10 +12,15 @@ struct Position {
 
     Position(int x = 0, int y = 0) : x(x), y(y) {}
 
-    // Helper function for displaying coordinates
+    // Equality operator for Position comparison
+    bool operator==(const Position& other) const {
+        return x == other.x && y == other.y;
+    }
+
     std::string toString() const {
         return "(" + std::to_string(x) + "," + std::to_string(y) + ")";
     }
+
 };
 
-#endif // POSITION_H
+#endif

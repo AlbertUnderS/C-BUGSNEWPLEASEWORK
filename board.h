@@ -1,7 +1,3 @@
-//
-// Created by arago on 31/03/2025.
-//
-
 #ifndef BOARD_H
 #define BOARD_H
 
@@ -9,32 +5,39 @@
 #include <string>
 #include <list>
 #include <fstream>
+#include "Bug.h"
 #include "Crawler.h"
+#include "Hopper.h"
 
 class Board {
 private:
-    std::vector<Crawler*> crawlers;
-    std::vector<std::vector<std::list<Crawler*>>> grid;
+    std::vector<Bug*> bugs;  // Vector of pointers to all bugs (polymorphic)
+    std::vector<std::vector<std::list<Bug*>>> grid; // 10x10 grid of bugs
 
 public:
-    Board();
-    ~Board();
+    Board() : grid(10, std::vector<std::list<Bug*>>(10)) {}
+    ~Board() {
+        for (auto bug : bugs)
+            delete bug;
+    }
 
     void initializeFromFile(const std::string& filename);
-    void displayAllBugs() const;
-    void findBugById(int id) const;
-    void tapBoard();
-    void displayLifeHistories() const;
-    void writeLifeHistoryToFile(std::ofstream& outFile) const;
 
     void updateBoard();
-    void displayAllCells() const;
+    void tapBoard();
 
-    void resolveFightsInCell(int x, int y);
+    void displayAllBugs() const;
+    void displayAllCells() const;
+    void displayLifeHistories() const;
+
+    void findBugById(int id) const;
+
+    void writeLifeHistoryToFile(std::ofstream& outFile) const;
 
     void runSimulation();
-    // Utility
-    const std::vector<Crawler*>& getCrawlers() const { return crawlers; }
+
+private:
+    void resolveFightsInCell(int x, int y);
 };
 
 #endif // BOARD_H

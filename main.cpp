@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -7,22 +8,25 @@
 
 int main() {
     Board board;
-    boa"C:/Users/arago/CLionProjects/CA3_CPP_AA/crawler-bugs.txt");
-rd.initializeFromFile(
+
+    std::string filename = "C:/Users/arago/CLionProjects/CA3_CPPREPEAT_A_A_/bugs.txt";
+    board.initializeFromFile(filename);
+
     while (true) {
         board.updateBoard();
+
         std::cout << "\nChoose an option:\n"
                   << "1. Display all bugs\n"
                   << "2. Find a bug by ID\n"
                   << "3. Tap the bug board\n"
-                  << "5. Display All Cells\n"
-                  << "6. Run Simulation\n"
+                  << "4. Display life history of all bugs\n"
+                  << "5. Display all cells\n"
+                  << "6. Run simulation\n"
                   << "7. Exit\n";
 
         int choice;
         std::cin >> choice;
 
-        // Declare variables before the switch statement
         std::time_t now = std::time(nullptr);
         std::tm* currentTime = std::localtime(&now);
         std::ostringstream fileName;
@@ -32,6 +36,7 @@ rd.initializeFromFile(
             case 1:
                 board.displayAllBugs();
                 break;
+
             case 2: {
                 int id;
                 std::cout << "Enter bug ID: ";
@@ -39,20 +44,26 @@ rd.initializeFromFile(
                 board.findBugById(id);
                 break;
             }
+
             case 3:
                 board.tapBoard();
                 break;
+
+            case 4:
+                board.displayLifeHistories();
+                break;
+
             case 5:
                 board.displayAllCells();
-            break;
+                break;
+
             case 6:
                 board.runSimulation();
-            break;
+                break;
 
             case 7:
                 std::cout << "Exiting program.\n";
 
-                // Create the filename with current date and time
                 fileName << "bugs_life_history_"
                          << (currentTime->tm_year + 1900) << "_"
                          << std::setw(2) << std::setfill('0') << currentTime->tm_mon + 1 << "_"
@@ -62,9 +73,7 @@ rd.initializeFromFile(
                          << std::setw(2) << std::setfill('0') << currentTime->tm_sec
                          << ".txt";
 
-                // Open the file for writing
                 outFile.open(fileName.str());
-
                 if (outFile) {
                     board.writeLifeHistoryToFile(outFile);
                     std::cout << "Life history written to: " << fileName.str() << std::endl;
@@ -73,15 +82,12 @@ rd.initializeFromFile(
                 }
 
                 return 0;
+
             default:
                 std::cout << "Invalid choice. Try again.\n";
+                break;
         }
-
-
-
     }
 
     return 0;
 }
-
-

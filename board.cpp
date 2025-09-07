@@ -1,168 +1,130 @@
 #include "Board.h"
 #include <iostream>
 #include <fstream>
-#include <cstdlib>
-#include <chrono>
+#include <algorithm>
 #include <thread>
+#include <chrono>
 
-Board::Board() : grid(10, std::vector<std::list<Crawler*>>(10)) {}
-
-Board::~Board() {
-    for (auto crawler : crawlers) {
-        delete crawler;
-    }
-}
-
+// Initialize from file
 void Board::initializeFromFile(const std::string& filename) {
     std::ifstream file(filename);
     if (!file) {
-        std::cerr << "Error: Unable to open the file!" << std::endl;
+        std::cerr << "Error: Cannot open file " << filename << std::endl;
         return;
     }
 
-    int id, x, y, size, dir;
-    while (file >> id >> x >> y >> size >> dir) {
-        Direction direction = static_cast<Direction>(dir);
-        Crawler* crawler = new Crawler(id, x, y, direction, size);
-        crawlers.push_back(crawler);
+    std::string line;
+    while (std::getline(file, line)) {
+        if (line.empty()) continue;
+
+        std::stringstream ss(line);
+        std::string token;
+
+        std::getline(ss, token, ';');
+        char type = token[0];
+
+        int id, x, y, dirInt, size;
+        std::getline(ss, token, ';'); id = std::stoi(token);
+        std::getline(ss, token, ';'); x = std::stoi(token);
+        std::getline(ss, token, ';'); y = std::stoi(token);
+        std::getline(ss, token, ';'); dirInt = std::stoi(token);
+        std::getline(ss, token, ';'); size = std::stoi(token);
+        Direction dir = static_cast<Direction>(dirInt);
+
+        if (type == 'C') {
+            bugs.push_back(new Crawler(id, x, y, dir, size));
+        } else if (type == 'H') {
+            std::getline(ss, token, ';');
+            int hopLength = std::stoi(token);
+            bugs.push_back(new Hopper(id, x, y, dir, size, hopLength));
+        }
     }
 
     file.close();
+    std::cout << "Loaded " << bugs.size() << " bugs from " << filename << std::endl;
+    updateBoard();
+}
+
+void Board::updateBoard() {
+    for (auto& row : grid)
+        for (auto& cell : row)
+            cell.clear();
+
+    for (auto bug : bugs) {
+        if (!bug->isAlive()) continue;
+        Position pos = bug->getPosition();
+        grid[pos.y][pos.x].push_back(bug);
+    }
 }
 
 void Board::displayAllBugs() const {
-    if (crawlers.empty()) {
-        std::cout << "No bugs on the board." << std::endl;
-        return;
-    }
-
-    for (const auto& crawler : crawlers) {
-        if (crawler->isAlive()) {
-            crawler->display();
-        }
-    }
+    for (auto bug : bugs)
+        if (bug->isAlive())
+            bug->display();
 }
 
 void Board::findBugById(int id) const {
-    for (const auto& crawler : crawlers) {
-        if (crawler->getId() == id) {
-            crawler->display();
+    for (auto bug : bugs) {
+        if (bug->getId() == id) {
+            bug->display();
             return;
         }
     }
-    std::cout << "Bug " << id << " not found." << std::endl;
+    std::cout << "Bug " << id << " not found.\n";
 }
 
 void Board::tapBoard() {
-    std::cout << "Tapping the board...\n";
+    for (auto bug : bugs)
+        bug->move();
 
-    // Move all crawlers
-    for (auto& crawler : crawlers) {
-        if (crawler->isAlive()) {
-            crawler->move();
-        }
-    }
+    updateBoard();
 
-    for (int y = 0; y < 10; ++y) {
-        for (int x = 0; x < 10; ++x) {
+    for (int y = 0; y < 10; ++y)
+        for (int x = 0; x < 10; ++x)
             resolveFightsInCell(x, y);
-        }
-    }
-
-    int aliveCount = 0;
-    for (const auto& crawler : crawlers) {
-        if (crawler->isAlive()) {
-            aliveCount++;
-        }
-    }
-
-    std::cout << "New positions after tap:\n";
-    displayAllBugs();
-
-    if (aliveCount <= 1) {
-        std::cout << "Game Over! Last bug standing!\n";
-        exit(0);
-    }
 }
 
 void Board::displayLifeHistories() const {
-    std::cout << "Displaying life history of all bugs:\n";
-    for (const auto& crawler : crawlers) {
-        crawler->displayLifeHistory();
-    }
-}
-
-// Board.cpp
-
-void Board::writeLifeHistoryToFile(std::ofstream& outFile) const {
-    outFile << "Life History of all Bugs:\n";
-    for (const auto& crawler : crawlers) {
-        outFile << crawler->getId() << " Crawler Path: ";
-        const auto& path = crawler->getPath();
-        for (const auto& pos : path) {
-            outFile << pos.toString() << ",";
-        }
-
-        int eatenId = crawler->getEatenById();
-        if (eatenId == -1) {
-            outFile << " Not eaten.\n";
-        } else {
-            outFile << " Eaten by " << eatenId << "\n";
-        }
-    }
-}
-
-
-void Board::updateBoard() {
-    for (auto& row : grid) {
-        for (auto& cell : row) {
-            cell.clear();
-        }
-    }
-
-
-    for (const auto& crawler : crawlers) {
-        Position pos = crawler->getPosition();
-        grid[pos.y][pos.x].push_back(crawler);
-    }
+    for (auto bug : bugs)
+        bug->displayLifeHistory();
 }
 
 void Board::displayAllCells() const {
-    std::cout << "Displaying all cells:\n";
     for (int y = 0; y < 10; ++y) {
         for (int x = 0; x < 10; ++x) {
             std::cout << "(" << x << "," << y << "): ";
-            if (grid[y][x].empty()) {
+            if (grid[y][x].empty())
                 std::cout << "empty\n";
-            } else {
-                for (const auto& crawler : grid[y][x]) {
-                    std::cout << "Crawler " << crawler->getId() << " ";
-                }
+            else {
+                for (auto bug : grid[y][x])
+                    std::cout << (bug->isAlive() ? "" : "[Dead]") << bug->getId() << " ";
                 std::cout << "\n";
             }
         }
     }
 }
 
-void Board::resolveFightsInCell(int x, int y) {
-    std::list<Crawler*>& cell = grid[y][x];
+void Board::writeLifeHistoryToFile(std::ofstream& out) const {
+    for (auto bug : bugs)
+        bug->writeLifeHistory(out);
+}
 
+void Board::resolveFightsInCell(int x, int y) {
+    auto& cell = grid[y][x];
     if (cell.size() <= 1) return;
 
-    cell.sort([](Crawler* a, Crawler* b) {
-        return a->getSize() > b->getSize();
-    });
+    cell.sort([](Bug* a, Bug* b) { return a->getSize() > b->getSize(); });
 
-    Crawler* winner = cell.front();
+    Bug* winner = cell.front();
     int totalSize = winner->getSize();
 
-    std::list<Crawler*>::iterator it = ++cell.begin();
-
+    auto it = ++cell.begin();
     while (it != cell.end()) {
-        Crawler* loser = *it;
+        Bug* loser = *it;
         if (loser->isAlive()) {
             loser->setAlive(false);
             totalSize += loser->getSize();
+            loser->setEatenById(winner->getId());
         }
         ++it;
     }
@@ -172,23 +134,23 @@ void Board::resolveFightsInCell(int x, int y) {
 
 void Board::runSimulation() {
     int round = 0;
-    while (crawlers.size() > 1) {
-        std::cout << "Round " << ++round << ":\n";
-        tapBoard();
+    while (true) {
+        int aliveCount = 0;
+        for (auto bug : bugs)
+            if (bug->isAlive()) aliveCount++;
 
+        if (aliveCount <= 1) break;
+
+        std::cout << "Round " << ++round << ":\n";
+
+        tapBoard();
         displayAllBugs();
 
         std::ofstream outFile("simulation_round_" + std::to_string(round) + ".txt");
-        if (outFile) {
-            writeLifeHistoryToFile(outFile);
-            std::cout << "Life history written to simulation_round_" << round << ".txt\n";
-        } else {
-            std::cerr << "Error: Could not write to file!\n";
-        }
+        if (outFile) writeLifeHistoryToFile(outFile);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));  // This makes the simulation pause for a second
+        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
-
 
     std::cout << "Simulation complete. Last bug standing:\n";
     displayAllBugs();

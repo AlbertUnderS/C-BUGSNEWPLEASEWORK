@@ -6,7 +6,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(CA3_CPP_A_A_
         main.cpp
-        Crawler.cpp
         Position.cpp
         Board.cpp
 )

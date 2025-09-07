@@ -9,7 +9,7 @@
 int main() {
     Board board;
 
-    std::string filename = "C:/Users/arago/CLionProjects/CA3_CPPREPEAT_A_A_/bugs.txt";
+    std::string filename = "bugs.txt";
     board.initializeFromFile(filename);
 
     while (true) {
